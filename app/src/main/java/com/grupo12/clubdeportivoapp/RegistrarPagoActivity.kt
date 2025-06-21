@@ -49,8 +49,18 @@ class RegistrarPagoActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
 
-        // Puedes definir el concepto según tu lógica (por ejemplo, siempre "Pago Mensual" para socios)
-        val concepto = if (socio.asociado) "Pago Mensual" else "Pago Diario"
+        binding.toggleGroupConcepto.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) {
+                val label = when (checkedId) {
+                    R.id.btnMensual -> "Concepto: Pago Mensual"
+                    R.id.btnDiario -> "Concepto: Pago Diario"
+                    else -> "Concepto: Pago Mensual"
+                }
+                binding.tvConceptoPago.text = label
+            }
+        }
+
+
 
         binding.btnBack.setOnClickListener { finish() }
 
@@ -63,6 +73,12 @@ class RegistrarPagoActivity : AppCompatActivity() {
                 if (monto == null || monto <= 0) {
                     Toast.makeText(this, "Monto inválido", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
+                }
+                // OBTENER EL CONCEPTO EN ESTE MOMENTO, NO ANTES
+                val concepto = when (binding.toggleGroupConcepto.checkedButtonId) {
+                    R.id.btnMensual -> "Pago Mensual"
+                    R.id.btnDiario -> "Pago Diario"
+                    else -> "Pago Mensual"
                 }
                 registrarPago(monto, socio, concepto)
             }
@@ -85,9 +101,15 @@ class RegistrarPagoActivity : AppCompatActivity() {
         )
         pagoDao.insertarPago(pago)
 
-        // Actualizar vencimiento del socio (ejemplo: suma 1 mes)
-        val nuevoVencimiento = calcularNuevaVigencia(socio.vencimiento)
+        // Actualizar vencimiento del socio según el tipo de concepto
+        val nuevoVencimiento = calcularNuevaVigencia(socio.vencimiento, concepto)
         socioDao.actualizarVencimiento(socio.dni, nuevoVencimiento)
+
+        // Si pagó un mes y no era asociado, actualizar estado
+        if (concepto == "Pago Mensual" && !socio.asociado) {
+            val socioActualizado = socio.copy(asociado = true)
+            socioDao.actualizar(socioActualizado)
+        }
 
         Toast.makeText(
             this,
@@ -102,18 +124,25 @@ class RegistrarPagoActivity : AppCompatActivity() {
         return sdf.format(Date())
     }
 
-    private fun calcularNuevaVigencia(vencimientoActual: String): String {
+    private fun calcularNuevaVigencia(vencimientoActual: String, concepto: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return try {
             val fecha = sdf.parse(vencimientoActual)
             val calendar = Calendar.getInstance()
             calendar.time = fecha ?: Date()
-            calendar.add(Calendar.MONTH, 1) // Suma 1 mes por pago mensual
+            if (concepto == "Pago Mensual") {
+                calendar.add(Calendar.MONTH, 1)
+            } else {
+                calendar.add(Calendar.DAY_OF_YEAR, 1)
+            }
             sdf.format(calendar.time)
         } catch (e: Exception) {
-            // Si la fecha está mal, toma hoy + 1 mes
             val calendar = Calendar.getInstance()
-            calendar.add(Calendar.MONTH, 1)
+            if (concepto == "Pago Mensual") {
+                calendar.add(Calendar.MONTH, 1)
+            } else {
+                calendar.add(Calendar.DAY_OF_YEAR, 1)
+            }
             sdf.format(calendar.time)
         }
     }

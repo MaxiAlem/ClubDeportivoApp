@@ -51,7 +51,14 @@ class DashboardActivity : AppCompatActivity() {
     private fun cargarSocios() {
         val socioDao = SocioDao(this)
         val listaSocios = socioDao.obtenerTodos()
-        val datosListView = listaSocios.map { "${it.nombre} ${it.apellido} - Vence: ${it.vencimiento}" }
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+        val hoy = sdf.format(java.util.Date())
+
+        val sociosVencidos = listaSocios.filter { socio ->
+            socio.vencimiento.isNullOrEmpty() || socio.vencimiento <= hoy
+        }
+
+        val datosListView = sociosVencidos.map { "${it.nombre} ${it.apellido} - Vence: ${it.vencimiento ?: "Sin fecha"}" }
         binding.lvCuotasAtrasadas.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,

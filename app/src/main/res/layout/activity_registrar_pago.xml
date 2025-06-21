@@ -103,6 +103,35 @@
                 android:layout_height="56dp"
                 android:background="@drawable/spinner_background"
                 android:layout_marginBottom="24dp"/>
+            <TextView
+                android:id="@+id/tvConceptoPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Concepto: Pago Mensual"
+                style="@style/TextAppearance.Body"
+                android:layout_marginBottom="16dp"/>
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupConcepto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMensual"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pago Mensual"
+                    android:checked="true"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDiario"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pago Diario"/>
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <Button
                 android:id="@+id/btnRegistrarPago"

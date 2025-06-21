@@ -27,13 +27,31 @@ class ReporteVencimientosActivity : AppCompatActivity() {
             showReporteGeneradoDialog()
         }
 
-        val usuariosVencidos = listOf(
-            "Juan Pérez - Vence: 18/05/2025",
-            "María Gómez - Vence: 18/05/2025"
-        )
+        // Obtiene dinámicamente los socios con vencimiento vencido o que vence hoy
+        val usuariosVencidos = obtenerSociosVencidos()
         binding.rvUsuariosVencidos.layoutManager = LinearLayoutManager(this)
         binding.rvUsuariosVencidos.adapter = VencimientosAdapter(usuariosVencidos)
     }
+
+    private fun obtenerSociosVencidos(): List<String> {
+        val socioDao = com.grupo12.clubdeportivoapp.db.SocioDao(this)
+        val todos = socioDao.obtenerTodos()
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val sdfMostrar = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val hoy = sdf.format(Date())
+
+        return todos.filter { socio ->
+            socio.vencimiento <= hoy
+        }.map { socio ->
+            val fechaVenc = try {
+                sdfMostrar.format(sdf.parse(socio.vencimiento)!!)
+            } catch (e: Exception) {
+                socio.vencimiento
+            }
+            "${socio.nombre} ${socio.apellido} - Vence: $fechaVenc"
+        }
+    }
+
     private fun showReporteGeneradoDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_reporte_generado, null)
         val dialog = AlertDialog.Builder(this)
