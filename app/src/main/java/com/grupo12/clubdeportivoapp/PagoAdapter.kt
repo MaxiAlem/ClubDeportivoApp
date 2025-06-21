@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class PagoAdapter(private val pagos: List<Pago>) : RecyclerView.Adapter<PagoAdapter.PagoViewHolder>() {
 
-    class PagoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PagoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNombreSocio: TextView = itemView.findViewById(R.id.tv_nombre_socio)
         val tvDetallePago: TextView = itemView.findViewById(R.id.tv_detalle_pago)
         val tvFecha: TextView = itemView.findViewById(R.id.tv_fecha)
@@ -21,8 +21,8 @@ class PagoAdapter(private val pagos: List<Pago>) : RecyclerView.Adapter<PagoAdap
 
     override fun onBindViewHolder(holder: PagoViewHolder, position: Int) {
         val pago = pagos[position]
-        holder.tvNombreSocio.text = pago.nombreSocio
-        holder.tvDetallePago.text = holder.itemView.context.getString(R.string.detalle_pago, pago.monto, pago.metodo)
+        holder.tvNombreSocio.text = "DNI: ${pago.dniSocio ?: "-"}"
+        holder.tvDetallePago.text = "Monto: $${pago.monto}  |  Tipo: ${pago.tipo}  |  Concepto: ${pago.concepto}"
         holder.tvFecha.text = pago.fecha
     }
 

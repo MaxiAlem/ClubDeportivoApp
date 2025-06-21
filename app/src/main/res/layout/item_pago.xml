@@ -3,24 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="12dp"
+    android:background="@drawable/rounded_item_bg"
+    android:layout_marginBottom="12dp">
+
     <TextView
         android:id="@+id/tv_nombre_socio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/socio_placeholder"
-        android:textSize="16sp" />
+        android:text="DNI: 12345678"
+        android:textSize="16sp"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"/>
+
     <TextView
         android:id="@+id/tv_detalle_pago"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/detalle_pago_placeholder"
-        android:textSize="14sp" />
+        android:text="Monto: $1000.00  |  Tipo: Transferencia  |  Concepto: Mensualidad"
+        android:textSize="14sp"
+        android:textColor="@color/primary_text"
+        android:layout_marginTop="2dp"/>
+
     <TextView
         android:id="@+id/tv_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fecha_placeholder"
-        android:textSize="14sp"
-        android:textColor="@color/dark_text" />
+        android:text="2025-06-21"
+        android:textSize="13sp"
+        android:textColor="@color/secondary_text"
+        android:layout_marginTop="2dp"/>
 </LinearLayout>

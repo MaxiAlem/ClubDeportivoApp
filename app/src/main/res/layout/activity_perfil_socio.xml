@@ -44,20 +44,20 @@
                 android:id="@+id/tvNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre Apellido"
-                android:textColor="@color/primary_text"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical"/>
+                android:text=""
+            android:textColor="@color/primary_text"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvDni"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DNI: 12345678"
-            android:textColor="@color/secondary_text"
-            android:layout_marginBottom="24dp"/>
+            android:text=""
+        android:textColor="@color/secondary_text"
+        android:layout_marginBottom="24dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,18 +84,20 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvTelefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Teléfono: 11-1234-5678"
-            android:textColor="@color/primary_text"
-            android:layout_marginBottom="8dp"/>
+            android:text=""
+        android:textColor="@color/primary_text"
+        android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email: socio@mail.com"
-            android:textColor="@color/primary_text"
-            android:layout_marginBottom="24dp"/>
+            android:text=""
+        android:textColor="@color/primary_text"
+        android:layout_marginBottom="24dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -107,25 +109,28 @@
             android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/tvFechaNacimiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha Nacimiento: 01/01/1990"
-            android:textColor="@color/primary_text"
-            android:layout_marginBottom="8dp"/>
+            android:text=""
+        android:textColor="@color/primary_text"
+        android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/tvEstado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Estado: Asociado"
-            android:textColor="@color/primary_text"
-            android:layout_marginBottom="8dp"/>
+            android:text=""
+        android:textColor="@color/primary_text"
+        android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/tvVencimiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Vencimiento: 30/06/2024"
-            android:textColor="@color/primary_text"
-            android:layout_marginBottom="24dp"/>
+            android:text=""
+        android:textColor="@color/primary_text"
+        android:layout_marginBottom="24dp"/>
 
         <Button
             android:id="@+id/btnVerClases"
@@ -146,7 +151,7 @@
             android:layout_marginBottom="16dp"/>
 
         <Button
-            android:id="@+id/btnRegistrarPago"
+            android:id="@+id/btnRegistrarPagoDni"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/registrar_pago"

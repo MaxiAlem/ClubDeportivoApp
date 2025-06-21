@@ -23,16 +23,17 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Volver"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                android:text="Volver" />
 
+            <!-- Nombre -->
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/roundedInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                style="@style/roundedInput"
-                app:boxBackgroundMode="outline"
                 app:boxBackgroundColor="@color/input_background"
+                app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -40,18 +41,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Nombre"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/primary_text"
-                    android:textColorHint="@color/secondary_text"
-                    android:paddingHorizontal="16dp"/>
+                    android:textColorHint="@color/secondary_text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Apellido -->
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/roundedInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                style="@style/roundedInput"
-                app:boxBackgroundMode="outline"
                 app:boxBackgroundColor="@color/input_background"
+                app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -59,18 +61,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Apellido"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/primary_text"
-                    android:textColorHint="@color/secondary_text"
-                    android:paddingHorizontal="16dp"/>
+                    android:textColorHint="@color/secondary_text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- DNI -->
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/roundedInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                style="@style/roundedInput"
-                app:boxBackgroundMode="outline"
                 app:boxBackgroundColor="@color/input_background"
+                app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -79,18 +82,19 @@
                     android:layout_height="56dp"
                     android:hint="DNI"
                     android:inputType="number"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/primary_text"
-                    android:textColorHint="@color/secondary_text"
-                    android:paddingHorizontal="16dp"/>
+                    android:textColorHint="@color/secondary_text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Teléfono -->
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/roundedInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                style="@style/roundedInput"
-                app:boxBackgroundMode="outline"
                 app:boxBackgroundColor="@color/input_background"
+                app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -99,18 +103,71 @@
                     android:layout_height="56dp"
                     android:hint="Teléfono"
                     android:inputType="phone"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/primary_text"
-                    android:textColorHint="@color/secondary_text"
-                    android:paddingHorizontal="16dp"/>
+                    android:textColorHint="@color/secondary_text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Email -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/roundedInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:boxBackgroundColor="@color/input_background"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary_color">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/secondary_text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fecha de Nacimiento -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/roundedInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:boxBackgroundColor="@color/input_background"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary_color">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFechaNacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:hint="Fecha de Nacimiento (YYYY-MM-DD)"
+                    android:inputType="date"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/secondary_text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Asociado Checkbox -->
+            <CheckBox
+                android:id="@+id/cbAsociado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Asociado"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/primary_text" />
+
+            <!-- Botón Registrar Socio -->
             <Button
                 android:id="@+id/btnRegistrar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Registrar Socio"
                 android:backgroundTint="@color/primary_color"
-                android:textColor="@color/white"/>
+                android:text="Registrar Socio"
+                android:textColor="@color/white" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

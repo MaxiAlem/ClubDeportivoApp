@@ -7,53 +7,42 @@
     android:background="@color/background"
     android:fitsSystemWindows="true">
 
-    <!-- Barra de estado -->
-
-    <!-- Contenido con Scroll -->
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="24dp">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volver"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_subtitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Historial de Pagos"
+            android:textColor="@color/primary_text"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
 
-            <!-- Botón Volver -->
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Volver"
-                android:layout_marginBottom="24dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_historial_pagos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="16dp" />
 
-            <!-- Subtítulo -->
-            <TextView
-                android:id="@+id/tv_subtitulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Historial de Pagos"
-                android:textColor="@color/primary_text"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
-
-            <!-- RecyclerView (lista de pagos) -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_historial_pagos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Botón para exportar PDF -->
-            <Button
-                android:id="@+id/btn_descargar_reporte"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descargar Reporte en PDF"
-                android:backgroundTint="@color/primary_color"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/btn_descargar_reporte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descargar Reporte en PDF"
+            android:backgroundTint="@color/primary_color"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 </LinearLayout>

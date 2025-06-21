@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo12.clubdeportivoapp.databinding.ActivityPerfilSocioBinding
+import com.grupo12.clubdeportivoapp.db.SocioDao
 
 class PerfilSocioActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPerfilSocioBinding
@@ -15,27 +16,30 @@ class PerfilSocioActivity : AppCompatActivity() {
         binding = ActivityPerfilSocioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Socio hardcodeado con todos los campos requeridos
-        val socioHardcodeado = Socio(
-            nombre = "Juan",
-            apellido = "Pérez",
-            dni = "12345678",
-            telefono = "555-1234",
-            email = "juan.perez@example.com",
-            fechaNacimiento = "01/01/1980",
-            asociado = true,
-            vencimiento = "31/12/2023"
-        )
+        val dni = intent.getStringExtra("dni")
+        if (dni.isNullOrEmpty()) {
+            Toast.makeText(this, "No se encontró el socio", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        val socioDao = SocioDao(this)
+        val socio = socioDao.obtenerPorDni(dni)
+        if (socio == null) {
+            Toast.makeText(this, "No se encontró el socio", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
         with(binding) {
             // Botón Atrás
-            btnBack.setOnClickListener {
-                finish()
-            }
+            btnBack.setOnClickListener { finish() }
 
             // Botón Editar
             btnEditar.setOnClickListener {
-                mostrarMensaje("Funcionalidad de edición en desarrollo")
+                val intent = Intent(this@PerfilSocioActivity, AddSocioActivity::class.java)
+                intent.putExtra("dni", socio.dni)
+                startActivity(intent)
             }
 
             // Botón Ver Clases - Navega a MantenimientoActivity
@@ -44,22 +48,25 @@ class PerfilSocioActivity : AppCompatActivity() {
             }
 
             // Botón Guardar
-            btnGuardar.setOnClickListener {
-                showDatosGuardadosDialog()
-            }
+            btnGuardar.setOnClickListener { showDatosGuardadosDialog() }
 
             // Botón Registrar Pago - Navega a RegistrarPagoActivity
-            btnRegistrarPago.setOnClickListener {
+            btnRegistrarPagoDni.setOnClickListener {
                 startActivity(
                     Intent(this@PerfilSocioActivity, RegistrarPagoActivity::class.java).apply {
-                        putExtra("socio", socioHardcodeado)
+                        putExtra("dni", socio.dni)
                     }
                 )
             }
 
-            // Mostrar datos del socio
-            tvNombre.text = "${socioHardcodeado.nombre} ${socioHardcodeado.apellido}"
-            tvDni.text = "DNI: ${socioHardcodeado.dni}"
+            // Mostrar datos
+            tvNombre.text = "${socio.nombre} ${socio.apellido}"
+            tvDni.text = "DNI: ${socio.dni}"
+            tvTelefono.text = "Teléfono: ${socio.telefono}"
+            tvEmail.text = "Email: ${socio.email}"
+            tvFechaNacimiento.text = "Fecha Nacimiento: ${socio.fechaNacimiento}"
+            tvEstado.text = "Estado: " + if (socio.asociado) "Asociado" else "No Asociado"
+            tvVencimiento.text = "Vencimiento: ${socio.vencimiento}"
         }
     }
 

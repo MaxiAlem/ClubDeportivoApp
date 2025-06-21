@@ -2,11 +2,10 @@ package com.grupo12.clubdeportivoapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import com.grupo12.clubdeportivoapp.databinding.ActivityFindSocioBinding
+import com.grupo12.clubdeportivoapp.db.SocioDao
 
 class FindSocio : AppCompatActivity() {
     private lateinit var binding: ActivityFindSocioBinding
@@ -16,33 +15,46 @@ class FindSocio : AppCompatActivity() {
         binding = ActivityFindSocioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupWindowInsets()
-        setupViews()
-    }
 
-    private fun setupWindowInsets() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                view.paddingLeft,
-                systemBars.top,
-                view.paddingRight,
-                systemBars.bottom
-            )
-            insets
-        }
-    }
+        val modo = intent.getStringExtra("modo") ?: "editar" // "editar" por defecto
 
-    private fun setupViews() {
-        // Botón Buscar: Navega directamente a PerfilSocioActivity sin validaciones
+
+        binding.btnBack.setOnClickListener { finish() }
+
         binding.btnBuscar.setOnClickListener {
-            startActivity(Intent(this, PerfilSocioActivity::class.java))
-        }
+            val query = binding.etBusqueda.text.toString().trim().lowercase()
+            val socioDao = SocioDao(this)
+            val socios = socioDao.obtenerTodos()
 
-        // Botón Atrás: Cierra la actividad
-        binding.btnBack.setOnClickListener {
-            finish()
+            val resultados = if (query.isEmpty()) {
+                emptyList()
+            } else {
+                socios.filter {
+                    it.dni.lowercase().contains(query) ||
+                            it.nombre.lowercase().contains(query) ||
+                            it.apellido.lowercase().contains(query)
+                }
+            }
+
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                resultados.map { "${it.nombre} ${it.apellido} - DNI: ${it.dni}" }
+            )
+            binding.lvResultados.adapter = adapter
+
+            binding.lvResultados.setOnItemClickListener { _, _, position, _ ->
+                val socioSeleccionado = resultados[position]
+                if (modo == "perfil") {
+                    val intent = Intent(this, PerfilSocioActivity::class.java)
+                    intent.putExtra("dni", socioSeleccionado.dni)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(this, AddSocioActivity::class.java)
+                    intent.putExtra("dni", socioSeleccionado.dni)
+                    startActivity(intent)
+                }
+            }
         }
     }
 }

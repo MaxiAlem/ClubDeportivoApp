@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo12.clubdeportivoapp.databinding.ActivityDashboardBinding
+import com.grupo12.clubdeportivoapp.db.SocioDao
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
@@ -14,22 +15,23 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.lvCuotasAtrasadas.adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            listOf("Juan Pérez - Vence: 15/05/2023", "María Gómez - Vence: 20/05/2023")
-        )
+        cargarSocios()
 
+        // Listeners de los botones
         binding.btnRegistrarSocio.setOnClickListener {
             startActivity(Intent(this, AddSocioActivity::class.java))
         }
 
         binding.btnEditarSocio.setOnClickListener {
-            startActivity(Intent(this, FindSocio::class.java))
+            val intent = Intent(this, FindSocio::class.java)
+            intent.putExtra("modo", "editar") // "editar" es tu default pero por si lñas moscas
+            startActivity(intent)
         }
 
         binding.btnRegistrarPago.setOnClickListener {
-            startActivity(Intent(this, FindSocio::class.java))
+            val intent = Intent(this, FindSocio::class.java)
+            intent.putExtra("modo", "perfil") // Este es el big one
+            startActivity(intent)
         }
 
         binding.btnReporteVencimientos.setOnClickListener {
@@ -39,5 +41,21 @@ class DashboardActivity : AppCompatActivity() {
         binding.btnHistorialCobros.setOnClickListener {
             startActivity(Intent(this, HistorialPagosSocioActivity::class.java))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarSocios() // ¡Esto actualiza la lista cuando volvés!
+    }
+
+    private fun cargarSocios() {
+        val socioDao = SocioDao(this)
+        val listaSocios = socioDao.obtenerTodos()
+        val datosListView = listaSocios.map { "${it.nombre} ${it.apellido} - Vence: ${it.vencimiento}" }
+        binding.lvCuotasAtrasadas.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            datosListView
+        )
     }
 }
