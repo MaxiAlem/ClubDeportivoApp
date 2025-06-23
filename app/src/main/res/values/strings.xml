@@ -11,7 +11,7 @@
     <string name="registrar_pago">Registrar Pago</string>
     <string name="reporte_de_vencimientos">Reporte de Vencimientos</string>
     <string name="historial_de_cobros">Historial de Cobros</string>
-    <string name="socios_con_cuotas_atrasadas">Socios con cuotas atrasadas:</string>
+    <string name="socios_con_cuotas_atrasadas">Socios con cuotas que vencen hoy:</string>
     <string name="error_login_default">Usuario o contraseña incorrectos</string>
     <string name="editar_socio">Editar Socio</string>
 
