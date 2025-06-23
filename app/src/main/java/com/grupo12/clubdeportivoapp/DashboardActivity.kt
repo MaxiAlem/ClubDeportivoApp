@@ -55,7 +55,7 @@ class DashboardActivity : AppCompatActivity() {
         val hoy = sdf.format(java.util.Date())
 
         val sociosVencidos = listaSocios.filter { socio ->
-            socio.vencimiento.isNullOrEmpty() || socio.vencimiento <= hoy
+            socio.vencimiento.isNullOrEmpty() || socio.vencimiento == hoy
         }
 
         val datosListView = sociosVencidos.map { "${it.nombre} ${it.apellido} - Vence: ${it.vencimiento ?: "Sin fecha"}" }
